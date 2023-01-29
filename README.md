@@ -12,6 +12,7 @@ Akademia IKUB kursi Python Nëntor 2022 - Shkurt 2022
 - Start virtual env
   - source ~/env/bin/activate
 - install requirements
+  - create requirements.txt file
   - pip install -r requirements.txt
 - new django project
   - django-admin startproject profiles_project .
@@ -46,3 +47,19 @@ Akademia IKUB kursi Python Nëntor 2022 - Shkurt 2022
 ## Django 3
   - https://www.django-rest-framework.org/api-guide/permissions/
   - Token <AUTH_TOKEN_OBTAINED_FROM_LOGIN>
+
+# Create Project
+  - Github
+    - create project
+    - clone project on pc
+  - Commands 1-6
+  - profile_project -> 
+    - settings.py (INSTALLED_APPS)
+    - urls.py (path('api/', include('profiles_api.urls')))
+  - profiles_api -> 
+    - models.py (each class(Models.model) is a table)
+    - views.py (ModelViewSet (endpoints) <-> serializer)
+    - serializer.py (validation json)
+    - urls.py (endpoints map)
+    - permissions (user and models rights)
+    - admin (register models for admin panel)

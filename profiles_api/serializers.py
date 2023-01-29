@@ -48,15 +48,25 @@ class ProductSerializer(serializers.ModelSerializer):
         model = models.Product
         fields = ('id', 'name', 'price', 'quantity')
 
+    def validate(self, data):
+        if data['quantity'] < 0:
+            raise serializers.ValidationError("Product quantity can't be negative")
+        return data
+
 
 class InvoiceSerializer(serializers.ModelSerializer):
+    items = serializers.SerializerMethodField()
+
+    def get_items(self, invoice):
+        return InvoiceItemSerializer(invoice.invoiceitem_set.all(), many=True).data
+
     class Meta:
-        model = models.Product
-        fields = ('id', 'client', 'date')
+        model = models.Invoice
+        fields = ('id', 'client', 'date', 'total', 'items')
 
 
 class InvoiceItemSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Product
-        fields = ('id', 'product', 'quantity', 'price', 'total')
-        extra_kwargs = {'total': {'read_only': True}}
+        model = models.InvoiceItem
+        fields = ('id', 'product', 'invoice', 'quantity', 'price', 'total')
+        extra_kwargs = {'total': {'read_only': True}, 'price ': {'read_only': True}}

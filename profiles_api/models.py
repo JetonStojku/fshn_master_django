@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
 from django.conf import settings
+from django.db.models import Sum, F
 
 
 class UserProfileManager(BaseUserManager):
@@ -81,9 +82,29 @@ class Invoice(models.Model):
     client = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
 
+    @property
+    def total(self):
+        # sum = 0
+        # for item in self.invoiceitem_set.all():
+        #     sum += item.total
+        # return sum
+        return self.invoiceitem_set.all().aggregate(total=Sum(F('quantity') * F('price')))
+
+    def __str__(self):
+        return f'{self.client} / {self.date}'
+
 
 class InvoiceItem(models.Model):
     product = models.ForeignKey('profiles_api.ProfileFeedItem', on_delete=models.CASCADE)
+    product = models.ForeignKey('profiles_api.Product', on_delete=models.CASCADE)
+    invoice = models.ForeignKey('profiles_api.Invoice', on_delete=models.CASCADE)
     quantity = models.FloatField(default=0)
     price = models.FloatField(default=0)
     total = models.FloatField(default=0)
+
+    @property
+    def total(self):
+        return self.price * self.quantity
+
+    def __str__(self):
+        return f'{self.product} - {self.invoice}'
