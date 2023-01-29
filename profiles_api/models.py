@@ -69,3 +69,21 @@ class ProfileFeedItem(models.Model):
     def __str__(self):
         """Return the model as a string"""
         return self.status_text
+
+
+class Product(models.Model):
+    name = models.CharField(max_length=50)
+    price = models.FloatField(default=0)
+    quantity = models.FloatField(default=0)
+
+
+class Invoice(models.Model):
+    client = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
+
+
+class InvoiceItem(models.Model):
+    product = models.ForeignKey('profiles_api.ProfileFeedItem', on_delete=models.CASCADE)
+    quantity = models.FloatField(default=0)
+    price = models.FloatField(default=0)
+    total = models.FloatField(default=0)

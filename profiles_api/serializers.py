@@ -41,3 +41,22 @@ class ProfileFeedItemSerializer(serializers.ModelSerializer):
         model = models.ProfileFeedItem
         fields = ('id', 'user_profile', 'status_text', 'created_on')
         extra_kwargs = {'user_profile': {'read_only': True}}
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Product
+        fields = ('id', 'name', 'price', 'quantity')
+
+
+class InvoiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Product
+        fields = ('id', 'client', 'date')
+
+
+class InvoiceItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Product
+        fields = ('id', 'product', 'quantity', 'price', 'total')
+        extra_kwargs = {'total': {'read_only': True}}
