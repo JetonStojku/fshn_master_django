@@ -95,12 +95,11 @@ class Invoice(models.Model):
 
 
 class InvoiceItem(models.Model):
-    product = models.ForeignKey('profiles_api.ProfileFeedItem', on_delete=models.CASCADE)
     product = models.ForeignKey('profiles_api.Product', on_delete=models.CASCADE)
     invoice = models.ForeignKey('profiles_api.Invoice', on_delete=models.CASCADE)
     quantity = models.FloatField(default=0)
     price = models.FloatField(default=0)
-    total = models.FloatField(default=0)
+    # total = models.FloatField(default=0)
 
     @property
     def total(self):
