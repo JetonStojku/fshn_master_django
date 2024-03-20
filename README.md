@@ -1,5 +1,5 @@
-# ikub_11_2022
-Akademia IKUB kursi Python Nëntor 2022 - Shkurt 2022
+# fshn_master_django
+FSHN Master Django Course
 
 # Database links
 - https://youtu.be/ABwD8IYByfk
