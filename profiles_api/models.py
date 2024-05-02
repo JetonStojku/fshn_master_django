@@ -1,8 +1,8 @@
-from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
-from django.contrib.auth.models import PermissionsMixin
-from django.contrib.auth.models import BaseUserManager
 from django.conf import settings
+from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import BaseUserManager
+from django.contrib.auth.models import PermissionsMixin
+from django.db import models
 from django.db.models import Sum, F
 
 
@@ -15,7 +15,7 @@ class UserProfileManager(BaseUserManager):
             raise ValueError('Users must have an email address')
 
         email = self.normalize_email(email)
-        user = self.model(email=email, name=name,)
+        user = self.model(email=email, name=name, )
 
         user.set_password(password)
         user.save(using=self._db)
@@ -99,6 +99,7 @@ class InvoiceItem(models.Model):
     invoice = models.ForeignKey('profiles_api.Invoice', on_delete=models.CASCADE)
     quantity = models.FloatField(default=0)
     price = models.FloatField(default=0)
+
     # total = models.FloatField(default=0)
 
     @property
